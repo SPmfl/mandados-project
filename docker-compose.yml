@@ -1,0 +1,30 @@
+version: '2'
+services:
+
+  db-postgres:
+    image: postgres:14.3
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./src/data/postgres:/var/lib/postgresql/data
+
+  db-mongo:
+    image: mongo:6.0
+    volumes:
+      - ./src/data/mongo:/data/db
+
+  node-app:
+    restart: on-failure
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4500:4000"
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - db-postgres
+      - db-mongo
