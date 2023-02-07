@@ -1,17 +1,14 @@
-const express = require('express');
-const app = express();
+import  dotenv  from 'dotenv';
+import app from './src/app.js';
 
-const port = 4000;
+dotenv.config();
 
-app.get('/', (req, res)=>{
-    res.send("dashboard 123");
+const PORT = process.env.PORT || 4000;
+
+app.get('*',(req,res)=>{
+    res.status(404).end("404 - page not found ");
 });
 
-app.get('/usuario', (req, res)=>{
-    res.send("Hi, user sda dasda");
-});
-
-
-app.listen(port, ()=>{
-    console.log(`Server running on port ${port}`);
+app.listen(PORT, ()=>{
+    console.log(`Server running on port ${PORT}`);
 }); 
