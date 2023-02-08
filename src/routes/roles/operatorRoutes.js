@@ -1,22 +1,18 @@
 import Router from 'express';
 import * as markPointCtrl from '../../controllers/markPointControllers.js';
 import * as operatorCtrl from '../../controllers/operatorControllers.js';
+import verifyToken from '../../middlewares/verifyToken.js';
+
 
 const router = Router();
 
-router.get('/',(req,res)=>{
-    res.status(200).json({ msg: "hola como está" });
-})
+router.get('/info', verifyToken, operatorCtrl.getInfo);
+router.put('/info', verifyToken, operatorCtrl.updateInfo);
 
-/** operator routes controller definition */
-router.get('/info', operatorCtrl.getInfo);
-router.put('/info', operatorCtrl.updateInfo);
-
-/** markpoint routes controller definition */
-router.get('/marks', markPointCtrl.getAllMarks);
-router.get('/marks/:id', markPointCtrl.getMark);
-router.post('/marks/', markPointCtrl.createMark);
-router.delete('/marks/:id', markPointCtrl.deleteMark);
-router.put('/marks/:id', markPointCtrl.updateMark);
+router.get('/marks', verifyToken, markPointCtrl.getAllMarks);
+router.get('/marks/:id', verifyToken, markPointCtrl.getMark);
+router.post('/marks/', verifyToken, markPointCtrl.createMark);
+router.delete('/marks/:id', verifyToken, markPointCtrl.deleteMark);
+router.put('/marks/:id', verifyToken, markPointCtrl.updateMark);
 
 export default router;

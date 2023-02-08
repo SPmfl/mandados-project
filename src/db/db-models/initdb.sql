@@ -14,8 +14,14 @@ CREATE TABLE users(
     PRIMARY KEY(userid)
 );
 
+DROP TABLE IF EXISTS roles;
+CREATE TABLE roles(
+    rol VARCHAR(10) NOT NULL CHECK (rol IN ('admin','operator'))
+);
 
 INSERT INTO users VALUES( 123, 'matheo', 'admin', DEFAULT,DEFAULT);
 INSERT INTO users VALUES( 456, 'operador1', 'operator',DEFAULT,DEFAULT);
 INSERT INTO users VALUES( 789, 'operador2', 'operator',DEFAULT,DEFAULT);
 INSERT INTO users VALUES( 110, 'operador3', 'operator',DEFAULT,DEFAULT);
+
+

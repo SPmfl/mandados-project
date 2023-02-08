@@ -8,8 +8,8 @@ const getAllMarks = async (req, res)=>{
         console.error(error);
         res.status(500).json({ msg: "server error - server can not retrieve point marks"});
     }
-
 }
+
 const getMark = async (req, res)=>{
     try {
         const mark = await Point.findById(req.params.id);
@@ -31,6 +31,17 @@ const createMark = async (req, res)=>{
         res.status(500).json({ msg: "server error - point mark not created"});
     }
 }
+const create2Mark = async (req, res)=>{
+    try {
+        const {iduser,type,geometry,properties,images} = req.body;
+        const newPoint = new Point({iduser,type,geometry,properties,images});
+        const pointCreated = await newPoint.save();
+        res.status(200).json(pointCreated);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "server error - point mark not created"});
+    }
+}
 
 const deleteMark = async (req,res)=>{
     try {
@@ -45,7 +56,9 @@ const deleteMark = async (req,res)=>{
 const updateMark = async (req,res)=>{
     try {
         const {iduser, name, coordinates, comments, images} = req.body;
-        const updatedMark = await Point.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        const updatedMark = await Point.findByIdAndUpdate(req.params.id, 
+            {iduser, name, coordinates, comments, images}, 
+            {new: true});
         res.status(200).json(updatedMark);
     } catch (error) {
         console.error(error);
@@ -53,4 +66,17 @@ const updateMark = async (req,res)=>{
     }
 }
 
-export {getAllMarks, getMark, createMark, deleteMark, updateMark}
+const update2Mark = async (req,res)=>{
+    try {
+        const {iduser,type,geometry,properties,images} = req.body;
+        const updatedMark = await Point.findByIdAndUpdate(req.params.id, 
+            {iduser,type,geometry,properties,images}, 
+            {new: true});
+        res.status(200).json(updatedMark);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "server error - point mark not updated"});
+    }
+}
+
+export {getAllMarks, getMark, createMark, create2Mark, deleteMark, updateMark, update2Mark}

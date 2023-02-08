@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const pointSchema = new Schema(
     {
@@ -9,10 +9,29 @@ const pointSchema = new Schema(
         images: [String]
     },
     {
-        timestamps:true,
-        versionKey:false
+        timestamps: true,
+        versionKey: false
+    }
+);
+const point2Schema = new Schema(
+    {   
+        iduser: Number,
+        type: String,
+        geometry: { 
+            type: String, 
+            coordinates: [Number] 
+        },
+        properties: { 
+            title: String, 
+            description: String 
+        },
+        images: [String]
+    },
+    {
+        timestamps: true,
+        versionKey: false
     }
 );
 
-
-export default model("Point", pointSchema);
+//export default model("Point2", point2Schema);
+export default model("Point", pointSchema); 
