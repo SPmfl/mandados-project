@@ -12,13 +12,13 @@ router.get('/',(req,res)=>{
 
 router.get('/operators', adminCtrl.getAllOperators);
 router.get('/operators/:id', adminCtrl.getOperator);
-router.post('/operators/', adminCtrl.createOperator);
+router.post('/operators', adminCtrl.createOperator);
 router.delete('/operators/:id', adminCtrl.deleteOperator);
 router.put('/operators/:id', adminCtrl.updateOperator);
 
 router.get('/marks', markPointCtrl.getAllMarks);
 router.get('/marks/:id', markPointCtrl.getMark);
-router.post('/marks/', markPointCtrl.createMark);
+router.post('/marks', markPointCtrl.createMark);
 router.delete('/marks/:id', markPointCtrl.deleteMark);
 router.put('/marks/:id', markPointCtrl.updateMark);
 

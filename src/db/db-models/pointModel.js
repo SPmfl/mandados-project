@@ -4,7 +4,7 @@ const pointSchema = new Schema(
     {
         iduser: Number,
         name: String,
-        coordinates: { latitud: Number, longitud: Number},
+        coordinates: { latitud: Number, longitud: Number },
         comments: [String],
         images: [String]
     },

@@ -18,11 +18,18 @@ const User = sequelize.define('User', {
             defaultValue: "operator"
         }
     },{
-        sequelize,
-        tableName: 'Users',
-        timestamps: true
+        // sequelize,
+        tableName: 'users',
+        timestamps: false
     }
 );
+
+//User.sync({ alter:true })
+User.sync()
+    .then(()=> console.log("table Users created"))
+    .catch(error => console.error("table not created", error));
+
+
 
 export default User;
 

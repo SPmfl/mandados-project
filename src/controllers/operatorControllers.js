@@ -6,6 +6,7 @@ const getInfo = async (req,res)=>{
         func: `getInfo`
     });
 }
+
 const updateInfo = (req,res)=>{
     res.status(200).json({
         msg: "hola desde operator controller",

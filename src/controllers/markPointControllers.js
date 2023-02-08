@@ -1,4 +1,4 @@
-import Point from '../db/deb-models/pointModel.js';
+import Point from '../db/db-models/pointModel.js';
 
 const getAllMarks = async (req, res)=>{
     try {

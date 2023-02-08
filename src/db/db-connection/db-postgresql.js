@@ -1,9 +1,7 @@
-import  dotenv  from 'dotenv';
+
 import  Sequelize  from 'sequelize';
 
-dotenv.config();
-
-const sequelize = new Sequelize('mandados','postgres','postgres',{
+const sequelize = new Sequelize('postgres','postgres','postgres',{
     host: 'localhost',
     dialect: 'postgres'
 });

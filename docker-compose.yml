@@ -2,7 +2,10 @@ version: '2'
 services:
 
   db-postgres:
-    image: postgres:14.3
+    #image: postgres:14.3
+    build:
+      context: .
+      dockerfile: Dockerfile-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
