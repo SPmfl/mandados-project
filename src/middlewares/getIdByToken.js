@@ -5,7 +5,7 @@ dotenv.config();
 
 const getIdByToken = (token)=>{
     try {
-        return jwt.verify(token, process.env.SECRET);
+        return jwt.verify(token, process.env.TOKEN_SECRET);
     }catch (error) {
         console.error(error);
     }

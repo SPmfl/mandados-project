@@ -10,7 +10,7 @@ const verifyToken = async (req, res, next)=>{
         //token decodification
         const token = req.headers['x-access-token'];
         if(!token) return res.status(401).json({msg: "token not provided"});
-        let idDecoded = jwt.verify(token, process.env.SECRET);
+        let idDecoded = jwt.verify(token, process.env.TOKEN_SECRET);
 
         //user verification
         const user = await User.findAll({

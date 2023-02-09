@@ -4,6 +4,6 @@ COPY ./package*.json .
 RUN npm cache clean --force
 RUN npm install
 COPY . .
-EXPOSE 4000
-CMD ["node","index.js"]
+EXPOSE 4500
+CMD ["node","src/index.js"]
 

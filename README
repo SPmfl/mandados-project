@@ -1,0 +1,8 @@
+docker compose - databases 
+sudo docker-compose up
+sudo docker-compose down
+
+application
+npm run dev
+
+

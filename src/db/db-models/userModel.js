@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from '../db-connection/db-postgresql.js';
+import sequelize from '../db-connection/db-postgresql.mjs';
 
 const User = sequelize.define('User', {
         userid: {

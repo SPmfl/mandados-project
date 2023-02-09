@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
 
   db-postgres:
@@ -21,17 +21,18 @@ services:
     volumes:
       - ./src/data/mongo:/data/db
 
-  # node-app:
-  #   restart: on-failure
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "4500:4000"
-  #   volumes:
-  #     - .:/app/
-  #     - /app/node_modules
-  #   command: npm run dev
-  #   depends_on:
-  #     - db-postgres
-  #     - db-mongo
+  node-app:
+    restart: on-failure
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4500:4500"
+    volumes:
+      - .:/app/
+      # - /app/node_modules
+    command:  npm run dev && npm install
+    depends_on:
+      - db-postgres
+      - db-mongo
+
