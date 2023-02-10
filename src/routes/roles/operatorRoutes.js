@@ -1,18 +1,18 @@
 import Router from 'express';
 import * as markPointCtrl from '../../controllers/markPointControllers.js';
 import * as operatorCtrl from '../../controllers/operatorControllers.js';
-import verifyToken from '../../middlewares/verifyToken.js';
+import passport from 'passport';
 
 
 const router = Router();
 
-router.get('/info', verifyToken, operatorCtrl.getInfo);
-router.put('/info', verifyToken, operatorCtrl.updateInfo);
+router.get('/info', passport.authenticate('jwt', { session: false }), operatorCtrl.getInfo);
+router.put('/info', passport.authenticate('jwt', { session: false }), operatorCtrl.updateInfo);
 
-router.get('/marks', verifyToken, markPointCtrl.getAllMarks);
-router.get('/marks/:id', verifyToken, markPointCtrl.getMark);
-router.post('/marks/', verifyToken, markPointCtrl.createMark);
-router.delete('/marks/:id', verifyToken, markPointCtrl.deleteMark);
-router.put('/marks/:id', verifyToken, markPointCtrl.updateMark);
+router.get('/marks', passport.authenticate('jwt', { session: false }), markPointCtrl.getAllMarks);
+router.get('/marks/:id', passport.authenticate('jwt', { session: false }), markPointCtrl.getMark);
+router.post('/marks/', passport.authenticate('jwt', { session: false }), markPointCtrl.createMark);
+router.delete('/marks/:id', passport.authenticate('jwt', { session: false }), markPointCtrl.deleteMark);
+router.put('/marks/:id', passport.authenticate('jwt', { session: false }), markPointCtrl.updateMark);
 
 export default router;

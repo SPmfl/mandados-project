@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from '../db-connection/db-postgresql.mjs';
+import bcrypt from 'bcrypt';
 
 const User = sequelize.define('User', {
         userid: {
@@ -12,20 +13,33 @@ const User = sequelize.define('User', {
             allowNull: false,
             defaultValue: "operator"
         },
-        rol: {
-            type: DataTypes.STRING,
+        roluser: {
+            type: DataTypes.ENUM('admin','operator'),
             allowNull:false,
             defaultValue: "operator"
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull:false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull:false
         }
     },{
         // sequelize,
         tableName: 'users',
-        timestamps: false
+        timestamps: false,
+        instanceMethods: {
+            isValidPassword(password){
+                return bcrypt.compare(password, this.password);
+            }
+        }
     }
 );
 
-//User.sync({ alter:true })
-User.sync()
+User.sync({ force:true })
+//User.sync()
     .then(()=> console.log("table Users created"))
     .catch(error => console.error("table not created", error));
 

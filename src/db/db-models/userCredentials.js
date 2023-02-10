@@ -1,12 +1,9 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const Schema = mongoose.Schema;
 
-const model = {
+const UserSchema = new Schema({
     email: {
         type: String,
         require: true,
@@ -16,20 +13,19 @@ const model = {
         type: String,
         require: true
     }
-}
+});
 
-const userSchema = new Schema(model);
-
-userSchema.pre('save', async (next)=>{
-    const hash = await bcrypt.hash(this.password, 10);
+UserSchema.pre('save', async function(next){
+    console.log("HOlas!! soy un middleware antes de salvar un usuario");
+    const hash = await bcrypt.hash(`${this.password}`, 10)
     this.password = hash;
     next();
 })
 
-userSchema.methods.isValidPassword = async (password)=>{
+UserSchema.methods.isValidPassword = async function(password){
     const user = this;
     const compare = await bcrypt.compare(password, user.password);
     return compare;
 }
 
-export default mongoose.model('UserCredentials', userSchema);
+export default mongoose.model('UserCredentials', UserSchema);
