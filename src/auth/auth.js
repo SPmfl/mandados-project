@@ -5,14 +5,13 @@ import User from "../db/db-models/userModel.js";
 
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import  {Strategy, ExtractJwt}  from 'passport-jwt';
+import { Strategy, ExtractJwt } from 'passport-jwt';
 import bcrypt from 'bcrypt';
 
 
 import dotenv from 'dotenv';
 
 dotenv.config();
-
 
 /** SIGNUP & SIGN IN  with mongo */
 // passport.use('signup', new localStrategy({
@@ -52,7 +51,8 @@ dotenv.config();
 //     }
 // }));
 
-// passport.use(new Strategy({
+
+
 //     secretOrKey: `${process.env.TOKEN_SECRET}`,
 //     jwtFromRequest: ExtractJwt.fromBodyField('x_access_token')
 // }, async (token, done) =>{
@@ -84,41 +84,40 @@ passport.use('signup', new LocalStrategy(
             const user = await User.create({ userid, name, roluser, email, password });
             if (user === null) return done(null, false, { message: 'signup failed' });
             req.body.user = user;
-            return done(null, user, { message: "can signup!" });
+            return done(null, user, { message: "can signup !" });
         } catch (error) {
             done(error);
         }
     }));
 
 
-passport.use('login', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-}, async (email, password, done) => {
-    try {
-        const user = await User.findOne({where:{email: email }})
-            .then(user => {
-                if(!user) return done(null, false, {message: 'email not found'});
-                return done(null, user);
-            }).catch(console.error);
+passport.use('signin', new LocalStrategy(
+    {
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true
+    },
+    async (req, email2, password2, done) => {
+        try {
 
+            const userAlready = await User.findOne({ where: { email: email2 } });
+            console.log(`usuario de la bd ${userAlready}`);
+            if (userAlready == null) return done(null, false, { message: 'user dont exist' })
 
-        const validate = await user.isValidPassword(password);
-        console.log("esta es la validacion::::",validate);
+            const validation = User.isValidPassword(password2, userAlready.password);
+            if (!validation) { return done(null, false, { message: 'wrong password' }) }
 
-        if(!validate) return done(null, false, { message: 'wrong password'});
+            return done(null, userAlready, { message: "login successfull" });
+        } catch (error) {
+            done(error);
+        }
+    }));
 
-        return done(null, user, { message: 'Login successfull'});
-    } catch (error) {
-        return done(error)
-    }
-}));
 
 passport.use(new Strategy({
     secretOrKey: `${process.env.TOKEN_SECRET}`,
     jwtFromRequest: ExtractJwt.fromBodyField('x_access_token')
-    //jwtFromRequest: ExtractJwt.fromBodyField('x_access_token')
-}, async (token, done) =>{
+}, async (token, done) => {
     try {
         return done(null, token.user)
     } catch (error) {

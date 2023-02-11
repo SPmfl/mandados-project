@@ -9,11 +9,18 @@ import operatorRoutes  from './routes/roles/operatorRoutes.js';
 import adminRoutes from './routes/roles/adminRoutes.js';
 
 
+import cors from 'cors';
+
+
 const app = express();
 import './auth/auth.js';
 
+app.options('*', cors());
+// app.use(cors({origin: '*'}));
+
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(express.urlencoded({extended:true}));
 
 app.get('/', (req, res)=>{
     res.status(200).redirect('/api');

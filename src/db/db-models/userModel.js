@@ -29,12 +29,12 @@ const User = sequelize.define('User', {
     },{
         // sequelize,
         tableName: 'users',
-        timestamps: false,
-        instanceMethods: {
-            isValidPassword(password){
-                return bcrypt.compare(password, this.password);
-            }
-        }
+        timestamps: false
+        // instanceMethods: {
+        //      isValidPassword(password){
+        //          return bcrypt.compare(password, this.password);
+        //      }
+        // }
     }
 );
 
@@ -43,7 +43,10 @@ User.sync({ force:true })
     .then(()=> console.log("table Users created"))
     .catch(error => console.error("table not created", error));
 
-
+User.isValidPassword = function (password, hashedPassword) {
+    // return bcrypt.compare(password, this.password).catch(err=>console.error("error while comparing passwords",err));
+    return bcrypt.compare(password, hashedPassword).catch(err=>console.error("error while comparing passwords",err));
+}
 
 export default User;
 
