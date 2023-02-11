@@ -1,31 +1,26 @@
 import { Schema, model } from 'mongoose';
 
-const pointSchema = new Schema(
-    {
-        iduser: Number,
-        name: String,
-        coordinates: { latitud: Number, longitud: Number },
-        comments: [String],
-        images: [String]
-    },
-    {
-        timestamps: true,
-        versionKey: false
+const geometry = new Schema(
+    { 
+        type: String, 
+        coordinates: [Number]
     }
 );
-const point2Schema = new Schema(
+const properties = new Schema(
+    { 
+        title: String, 
+        description: String 
+    }
+);
+
+const pointSchema = new Schema(
     {   
         iduser: Number,
         type: String,
-        geometry: { 
-            type: String, 
-            coordinates: [Number] 
-        },
-        properties: { 
-            title: String, 
-            description: String 
-        },
-        images: [String]
+        geometry: geometry,
+        properties: properties ,
+        images: [String],
+        comments: [String],
     },
     {
         timestamps: true,
@@ -33,5 +28,5 @@ const point2Schema = new Schema(
     }
 );
 
-//export default model("Point2", point2Schema);
 export default model("Point", pointSchema); 
+
