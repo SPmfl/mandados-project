@@ -16,10 +16,6 @@ router.post('/signup',
             message: "signup successful, you can now login",
             user: req.body.user
         });
-        // res.status(200).redirect('/login').json({
-        //     message: "signup successful, you can now login",
-        //     user: req.body.user
-        // });
     }
 );
 

@@ -12,7 +12,7 @@ router.put('/info', passport.authenticate('jwt', { session: false }), operatorCt
 router.get('/marks', passport.authenticate('jwt', { session: false }), markPointCtrl.getAllMarks);
 router.get('/marks/:id', passport.authenticate('jwt', { session: false }), markPointCtrl.getMark);
 router.post('/marks/', passport.authenticate('jwt', { session: false }), markPointCtrl.createMark);
-router.delete('/marks/:id', passport.authenticate('jwt', { session: false }), markPointCtrl.deleteMark);
+router.delete('/marks', passport.authenticate('jwt', { session: false }), markPointCtrl.deleteMark);
 router.put('/marks/:id', passport.authenticate('jwt', { session: false }), markPointCtrl.updateMark);
 
 export default router;
