@@ -9,15 +9,51 @@ dotenv.config();
 
 const router = Router();
 
+
+const signingToken = (req) => {
+    // const body = { userid: req.body.user.userid, email: req.body.user.email }
+    const { userid, name, email, rol } = req.body.user;
+    //console.log("firmando token con userid y email", body);
+    // const token = Jwt.sign({ user: body }, process.env.TOKEN_SECRET);
+    const token = Jwt.sign({ user: { userid, name, email, rol } }, process.env.TOKEN_SECRET);
+    return token;
+}
+
+
 router.post('/signup',
     passport.authenticate('signup', { session: false }),
     (req, res) => {
+        const token = signingToken(req);
         res.status(200).json({
             message: "signup successful, you can now login",
-            user: req.body.user
+            user: req.body.user,
+            x_access_token: token
         });
     }
 );
+
+
+router.post('/login', passport.authenticate('signin', { session: false }),
+    function (req, res) {
+        const token = signingToken(req);
+        res.status(200).json({ x_access_token: token });
+    });
+
+
+router.get('/profile', passport.authenticate('jwt', { session: false }),
+    (req, res, next) => {
+        res.json({
+            message: 'profile - passed auth',
+            user: req.user
+        });
+    }
+)
+
+export default router;
+
+
+
+
 
 /* login with mongo */
 // router.post('/login',
@@ -63,31 +99,3 @@ router.post('/signup',
 //                 }
 //             })(req,res,next);
 //     });
-
-
-
-router.post('/login', passport.authenticate('signin',{ session: false }),
-    function (req, res) {
-        const token = signingToken(req);
-        console.log("lsoslsodkadad", token);
-        res.status(200).json({x_access_token:token});
-    });
-
-const signingToken = (req) => {
-    const body = { userid: req.body.userid, email: req.body.email }
-    const token = Jwt.sign({ user: body }, process.env.TOKEN_SECRET);
-    return token;
-}
-
-
-router.get('/profile', passport.authenticate('jwt', { session: false }),
-    (req, res, next) => {
-        res.json({
-            message: 'hola con auth',
-            user: req.body,
-            token: req.body.x_access_token
-        });
-    }
-)
-
-export default router;

@@ -5,9 +5,9 @@ import User from "../db/db-models/userModel.js";
 
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import { Strategy, ExtractJwt } from 'passport-jwt';
+//import { Strategy, ExtractJwt } from 'passport-jwt';
 import bcrypt from 'bcrypt';
-
+import jwt from 'jsonwebtoken';
 
 import dotenv from 'dotenv';
 
@@ -63,7 +63,8 @@ dotenv.config();
 //     }
 // }));
 
-
+import pkg from 'passport-jwt';
+const { Strategy, ExtractJwt } = pkg;
 
 /** SIGNUP & SIGN IN  with postgres */
 passport.use('signup', new LocalStrategy(
@@ -101,12 +102,11 @@ passport.use('signin', new LocalStrategy(
         try {
 
             const userAlready = await User.findOne({ where: { email: email2 } });
-            console.log(`usuario de la bd ${userAlready}`);
             if (userAlready == null) return done(null, false, { message: 'user dont exist' })
 
             const validation = User.isValidPassword(password2, userAlready.password);
             if (!validation) { return done(null, false, { message: 'wrong password' }) }
-
+            req.body.user = userAlready;
             return done(null, userAlready, { message: "login successfull" });
         } catch (error) {
             done(error);
@@ -114,13 +114,32 @@ passport.use('signin', new LocalStrategy(
     }));
 
 
-passport.use(new Strategy({
+
+passport.use('jwt',new Strategy({
     secretOrKey: `${process.env.TOKEN_SECRET}`,
-    jwtFromRequest: ExtractJwt.fromBodyField('x_access_token')
+    jwtFromRequest: ExtractJwt.fromHeader('x_access_token')
 }, async (token, done) => {
     try {
-        return done(null, token.user)
+        console.log("autenticando token",token);
+        return done(null, token.user);
     } catch (error) {
         done(error)
     }
 }));
+
+
+// passport.use('jwt2',new Strategy({
+//     secretOrKey: `${process.env.TOKEN_SECRET}`,
+//     jwtFromRequest: ExtractJwt.fromHeader('x_access_token')
+// }, async (token, done) => {
+//     try {
+//         if(!jwtFromRequest) {return done(null, false, {msg: "no token provided"}) }
+
+//         const decoded = jwt.verify(jwtFromRequest, process.env.TOKEN_SECRET);
+
+
+//         return done(null, token.user)
+//     } catch (error) {
+//         done(error)
+//     }
+// }));

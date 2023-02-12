@@ -2,6 +2,23 @@ import getIdByToken from '../middlewares/getIdByToken.js';
 import User from '../db/db-models/userModel.js';
 import { Op } from 'sequelize';
 
+
+const getInfoPruebaFront = async (req,res)=>{
+    try {
+
+        res.status(200).json({
+            userid: 123456,
+            name: 'name',
+            email: 'email@sample.com',
+            rol: 'operator123141'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(200).json({msg: "server error - can't retrieve information"});
+    }
+}
+
+
 const getInfo = async (req,res)=>{
     try {
         const iduser = getIdByToken(req.headers['x-access-token']);
@@ -18,6 +35,11 @@ const getInfo = async (req,res)=>{
 
 const updateInfo = async(req,res)=>{
     try {
+
+
+
+
+
         const useridtoken = getIdByToken(req.headers['x-access-token']);
         const { name } = req.body;
         await User.update({ name },
@@ -31,4 +53,4 @@ const updateInfo = async(req,res)=>{
     }
 }
 
-export {getInfo, updateInfo}
+export {getInfo,getInfoPruebaFront, updateInfo}
