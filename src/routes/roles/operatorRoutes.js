@@ -7,8 +7,9 @@ import passport from 'passport';
 const router = Router();
 
 
-router.get('/info', passport.authenticate('jwt', { session: false }), operatorCtrl.getInfo);
-router.put('/info', passport.authenticate('jwt', { session: false }), operatorCtrl.updateInfo);
+router.get('/profile',  operatorCtrl.getInfo);
+// router.get('/profile', passport.authenticate('jwt', { session: false }), operatorCtrl.getInfo);
+router.put('/profile', passport.authenticate('jwt', { session: false }), operatorCtrl.updateInfo);
 router.get('/marks', passport.authenticate('jwt', { session: false }), markPointCtrl.getAllMarks);
 router.get('/marks/:id', passport.authenticate('jwt', { session: false }), markPointCtrl.getMark);
 router.post('/marks/', passport.authenticate('jwt', { session: false }), markPointCtrl.createMark);

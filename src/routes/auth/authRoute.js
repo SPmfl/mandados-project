@@ -11,14 +11,13 @@ const router = Router();
 
 
 const signingToken = (req) => {
-    // const body = { userid: req.body.user.userid, email: req.body.user.email }
+    const body = { userid: req.body.user.userid, email: req.body.user.email }
     const { userid, name, email, rol } = req.body.user;
     //console.log("firmando token con userid y email", body);
     // const token = Jwt.sign({ user: body }, process.env.TOKEN_SECRET);
     const token = Jwt.sign({ user: { userid, name, email, rol } }, process.env.TOKEN_SECRET);
     return token;
 }
-
 
 router.post('/signup',
     passport.authenticate('signup', { session: false }),
@@ -32,12 +31,23 @@ router.post('/signup',
     }
 );
 
+// router.post('/login', passport.authenticate('signin', { session: false }),
+//     function (req, res) {
+//         const token = signingToken(req);
+//         res.status(200).json({ x_access_token: token });
+//     });
 
-router.post('/login', passport.authenticate('signin', { session: false }),
-    function (req, res) {
-        const token = signingToken(req);
-        res.status(200).json({ x_access_token: token });
+router.post('/login',  passport.authenticate('signin', { session: false }), 
+    (req, res)=>{
+        try {
+            const token = signingToken(req);
+            res.status(200).json({ x_access_token: token });
+        } catch (error) {
+            console.error(error);
+        }
     });
+
+
 
 
 router.get('/profile', passport.authenticate('jwt', { session: false }),

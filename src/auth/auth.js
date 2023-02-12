@@ -102,11 +102,20 @@ passport.use('signin', new LocalStrategy(
         try {
 
             const userAlready = await User.findOne({ where: { email: email2 } });
-            if (userAlready == null) return done(null, false, { message: 'user dont exist' })
+            if (userAlready === null || userAlready === undefined) {
+                console.log("user not exist");
+                return done(null, false, { message: 'user dont exist' })
+            }
 
-            const validation = User.isValidPassword(password2, userAlready.password);
-            if (!validation) { return done(null, false, { message: 'wrong password' }) }
+            const validation = await User.isValidPassword(password2, userAlready.password);
+            // console.log("password validation ", validation);
+            if (!validation) { 
+                console.log("user password wrong!");
+                return done(null, false, { message: 'wrong password' }) 
+            }
+
             req.body.user = userAlready;
+            // console.log("returning userAlready");
             return done(null, userAlready, { message: "login successfull" });
         } catch (error) {
             done(error);

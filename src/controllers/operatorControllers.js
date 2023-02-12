@@ -3,6 +3,15 @@ import User from '../db/db-models/userModel.js';
 import { Op } from 'sequelize';
 
 
+const getInfo = (req, res, next) => {
+    res.json({
+        message: 'Operator profile information',
+        user: req.user
+    });
+}
+
+
+
 const getInfoPruebaFront = async (req,res)=>{
     try {
 
@@ -19,7 +28,7 @@ const getInfoPruebaFront = async (req,res)=>{
 }
 
 
-const getInfo = async (req,res)=>{
+const getInfo2 = async (req,res)=>{
     try {
         const iduser = getIdByToken(req.headers['x-access-token']);
         console.log(`user id: ${iduser}`);
@@ -53,4 +62,4 @@ const updateInfo = async(req,res)=>{
     }
 }
 
-export {getInfo,getInfoPruebaFront, updateInfo}
+export {getInfo, getInfoPruebaFront, updateInfo}
