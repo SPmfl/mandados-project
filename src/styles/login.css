@@ -1,0 +1,21 @@
+#auth-container{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-signup{
+    width: 400px;
+    height: 500px;
+    background-color: aqua;
+}
+
+#login-signup-buttons{
+    width: 400px;
+    height: 90px;
+    background-color: blue;
+}

@@ -1,0 +1,19 @@
+#error-page{
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#h1{
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+#div2{
+    border: 1px solid;
+    border-radius: 10px;
+    box-shadow: 10px 10px;
+}

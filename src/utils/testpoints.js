@@ -8,7 +8,7 @@ export const geojson = {
                 'coordinates': [-77.032, 38.913]
             },
             'properties': {
-                'title': 'Mapbox',
+                'title': 'ubication 1',
                 'description': 'Washington, D.C.'
             }
         },
@@ -19,7 +19,7 @@ export const geojson = {
                 'coordinates': [-122.414, 37.776]
             },
             'properties': {
-                'title': 'Mapbox',
+                'title': 'ubication 1',
                 'description': 'San Francisco, California'
             }
         }
