@@ -1,7 +1,7 @@
 #navbar-container{
     z-index: 1;
     height: 100px;
-    width: 100%;    
+    width: 100%;   
 }
 
 #container-title{
@@ -67,15 +67,10 @@
 }
 
 
-
-
-
-
-
-
 #content-container{
+    /* border: 2px solid greenyellow; */
     position: absolute;
-    background-color: blue;
-    height: 50vh;
+    min-height: 600px;
+    height: 85%;
     width: 100%;
 }
