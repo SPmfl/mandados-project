@@ -16,7 +16,7 @@ const fetcher = async (url) => await axios.get(url,
     {
         headers: {
             'x_access_token': localStorage.getItem('x_access_token')
-       }
+        }
     })
     .then(response => {
         console.log(response.data.message);
@@ -33,12 +33,12 @@ function Profile() {
     const [userRol, setUserRol] = useState('');
     const [formData, setFormData] = useState({});
 
- try {
-       if (error) return <ErrorPage />
-       if (isLoading) return <h1>Loading ...</h1>
- } catch (error) {
-    console.error("error verifying useSWR data",error);
- }
+    try {
+        //if (error) return <ErrorPage />
+        if (isLoading) return <h1>Loading ...</h1>
+    } catch (error) {
+        console.error("error verifying useSWR data", error);
+    }
 
     /*Form data changes on user input */
     const handleChange = (event) => {
@@ -51,12 +51,13 @@ function Profile() {
     /**Form submit function */
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.put('http://localhost:4500/api/operator/profile', {
-            body: "mensaje desde front"
-        })
-            .then(response => response.data)
-            .then(data => console.log("respuesta handleSubmit:", data))
-            .catch(error => console.error(error));
+        console.log("hola submit");
+        // axios.put('http://localhost:4500/api/operator/profile', {
+        //     body: "mensaje desde front"
+        // })
+        //     .then(response => response.data)
+        //     .then(data => console.log("respuesta handleSubmit:", data))
+        //     .catch(error => console.error(error));
     }
 
 
