@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
-import {Outlet, Route, Routes, Link } from "react-router-dom";
+import { Outlet, Route, Routes, Link, Navigate } from "react-router-dom";
 
 import '../styles/login.css';
 
 function Login() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [emailLogin, setEmailLogin] = useState('');
     const [passwordLogin, setPasswordLogin] = useState('');
@@ -21,6 +22,11 @@ function Login() {
     const handleLogin = (event) => {
         event.preventDefault();
         try {
+            if (!isLoggedIn) { 
+                setIsLoggedIn(true) 
+
+            }
+
             // axios.post(urlLogin, {
             //     headers:{
             //         'Content-Type':'application/json;charset=utf-8'
@@ -30,25 +36,25 @@ function Login() {
             //         password:  passwordLogin
             //     }
             // }).then( (response) =>{
-            axios.post(urlLogin, {
-                body: {
-                    email: emailLogin,
-                    password: passwordLogin
-                }
-            }).then((response) => {
-                const data = response.data;
-                console.log("data received");
-                if(!data) return window.location('/');
-                if ('x_access_token' in data) {
-                    console.log("token received!");
-                    localStorage.setItem('x_access_token', 
-                    JSON.parse(response.data.token));
-                    window.location('/app/welcome');
-                }else{
-                    console.log("no token access provided");
-                }
+            // axios.post(urlLogin, {
+            //     body: {
+            //         email: emailLogin,
+            //         password: passwordLogin
+            //     }
+            // }).then((response) => {
+            //     const data = response.data;
+            //     console.log("data received");
+            //     if (!data) return window.location('/');
+            //     if ('x_access_token' in data) {
+            //         console.log("token received!");
+            //         localStorage.setItem('x_access_token',
+            //             JSON.parse(response.data.token));
+            //         window.location('/app/welcome');
+            //     } else {
+            //         console.log("no token access provided");
+            //     }
 
-            }).catch(console.error)
+            // }).catch(console.error)
         } catch (error) {
             console.error(error);
         }
@@ -60,34 +66,42 @@ function Login() {
     const handleSignup = (event) => {
         event.preventDefault();
         try {
-            axios.post(urlSignup, {
-                body: {
-                    userid: useridSignup,
-                    name: nameSignup,
-                    roluser: rolSignup,
-                    email: emailSignup,
-                    password: passwordSignup
-                }
-            }).then((response) => {
-                const data = response.data;
-                console.log("data received from signup", data);
-                
-                if ('x_access_token' in data) {
-                    console.log("token received!");
-                    localStorage.setItem('x_access_token', 
-                    JSON.parse(response.data.token));
-                    window.location('/app/welcome');
-                }
+            if (!isLoggedIn) { 
+                setIsLoggedIn(true) 
 
-            }).catch(console.error)
+            }
+            // axios.post(urlSignup, {
+            //     body: {
+            //         userid: useridSignup,
+            //         name: nameSignup,
+            //         roluser: rolSignup,
+            //         email: emailSignup,
+            //         password: passwordSignup
+            //     }
+            // }).then((response) => {
+            //     const data = response.data;
+            //     console.log("data received from signup", data);
+
+            //     if ('x_access_token' in data) {
+            //         console.log("token received!");
+            //         localStorage.setItem('x_access_token',
+            //             JSON.parse(response.data.token));
+            //         window.location('/app/welcome');
+            //     }
+
+            // }).catch(console.error)
         } catch (error) {
-
+            console.error(error);
         }
+    }
+
+    if (isLoggedIn) {
+        return <Navigate to="/app" />;
     }
 
     return (
         <div id="container" >
-            
+
             <div id="login" className=" form-basic" >
                 <h1>LogIn</h1>
                 <form onSubmit={handleLogin} className="centered form-basic">
@@ -161,7 +175,7 @@ function Login() {
                         className="btn btn-secondary button-submit">Login</button>
                 </form>
             </div>
-            
+
         </div>
     );
 }
