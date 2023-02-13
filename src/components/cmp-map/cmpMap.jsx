@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import ReactDOM from "react-dom";
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import './cmpMap.css';
 
@@ -65,13 +64,23 @@ export default function MapComponent(props) {
     addToMap(map.current, features);
   })
 
-const addToMap = (map, features)=>{
-    features.map(feature =>{
-      new mapboxgl.Marker()
-      .setLngLat(feature.geometry.coordinates)
-      .addTo(map);
-    })
-}
+
+  const addToMap = (map, features) => {
+    features.map(feature => {
+      new mapboxgl.Marker(
+        {
+          color: "#000",
+          draggable: true,
+        }
+      )
+        .setLngLat(feature.geometry.coordinates)
+        .setPopup(
+          new mapboxgl.Popup()
+            .setHTML("<h1>Marker!!!</h1>")
+            .addTo(map))
+        .addTo(map);
+    });
+  }
 
   return (
     <div>
