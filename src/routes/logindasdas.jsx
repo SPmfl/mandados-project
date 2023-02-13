@@ -3,7 +3,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Route, Link, useNavigate } from 'react-router-dom';
 
 
-function LoginForm() {
+function Login() {
 
 
  
@@ -70,7 +70,7 @@ return (
   );
 }
 
-export default LoginForm;
+export default Login;
 
 
 
