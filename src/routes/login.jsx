@@ -96,6 +96,7 @@ function Login() {
     }
 
     if (isLoggedIn) {
+        console.log("logged in!");
         return <Navigate to="/app" />;
     }
 
