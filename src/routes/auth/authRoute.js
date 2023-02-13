@@ -40,6 +40,7 @@ router.post('/signup',
 router.post('/login',  passport.authenticate('signin', { session: false }), 
     (req, res)=>{
         try {
+            console.log("login::::::", req.body);
             const token = signingToken(req);
             res.status(200).json({ x_access_token: token });
         } catch (error) {

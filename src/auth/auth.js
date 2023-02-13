@@ -100,7 +100,7 @@ passport.use('signin', new LocalStrategy(
     },
     async (req, email2, password2, done) => {
         try {
-
+            
             const userAlready = await User.findOne({ where: { email: email2 } });
             if (userAlready === null || userAlready === undefined) {
                 console.log("user not exist");
