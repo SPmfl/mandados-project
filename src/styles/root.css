@@ -70,7 +70,7 @@
 #content-container{
     /* border: 2px solid greenyellow; */
     position: absolute;
-    min-height: 600px;
-    height: 85%;
+    min-height: 700px;
+    height: 80%;
     width: 100%;
 }
