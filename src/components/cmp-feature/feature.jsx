@@ -24,41 +24,45 @@ const Feature = (props) => {
 
   return (
     <form onSubmit={handleSubmit} id="feature-form">
-      <label className='.tags'>
-        Title:
+
+      <div className='input-group mb-3'>
+        <span className='input-group-text'>Title</span>
         <input
           type="text"
           value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
-      </label>
+          className='rounded'
+          onChange={(event) => setTitle(event.target.value)} />
+      </div>
       <br />
-      <label>
-        Description:
+      <div className='input-group mb-3'>
+        <span className='input-group-text'>Description</span>
         <input
           type="text"
           value={description}
+          className='rounded'
           onChange={(event) => setDescription(event.target.value)}
         />
-      </label>
+      </div>
       <br />
-      <label>
-        Longitude:
+      <div className='input-group mb-3'>
+        <span className='input-group-text'>Longitud</span>
         <input
           type="text"
           value={longitude}
+          className='rounded'
           onChange={(event) => setLongitude(event.target.value)}
         />
-      </label>
+      </div>
       <br />
-      <label>
-        Latitude:
+      <div className='input-group mb-3'>
+        <span className='input-group-text'>Latitud</span>
         <input
           type="text"
           value={latitude}
+          className='rounded'
           onChange={(event) => setLatitude(event.target.value)}
         />
-      </label>
+      </div >
       <br />
       <button type="submit" className='btn btn-dark'>Submit</button>
     </form>
