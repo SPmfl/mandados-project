@@ -38,11 +38,14 @@ function Login() {
             }).then((response) => {
                 const data = response.data;
                 console.log("data received");
+                if(!data) return window.location('/');
                 if ('x_access_token' in data) {
                     console.log("token received!");
                     localStorage.setItem('x_access_token', 
                     JSON.parse(response.data.token));
                     window.location('/app/welcome');
+                }else{
+                    console.log("no token access provided");
                 }
 
             }).catch(console.error)
@@ -68,6 +71,7 @@ function Login() {
             }).then((response) => {
                 const data = response.data;
                 console.log("data received from signup", data);
+                
                 if ('x_access_token' in data) {
                     console.log("token received!");
                     localStorage.setItem('x_access_token', 
