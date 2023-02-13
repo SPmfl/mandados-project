@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Outlet, Route, Routes, Link } from "react-router-dom"
 import '../styles/root.css'
-const sesion = localStorage.getItem('@user');
+//const sesion = localStorage.getItem('@user');
 
 const Root = () => {
     return (
@@ -10,7 +10,7 @@ const Root = () => {
             <div id="navbar-container" >
 
                 <div id="container-title" className="container-fluid">
-                    <a href="/error" className="navbar-brand">
+                    <a href="/app" className="navbar-brand">
                         <h1 id="title-h1"> Mandados APP </h1>
                     </a>
                 </div>
@@ -25,11 +25,11 @@ const Root = () => {
                             <ul id="nav-ul" className="navbar-nav">
 
                                 <li id="nav-li" className="nav-item ">
-                                    <Link to={'/map'} className="btn btn-dark mwidth">Map</Link>
+                                    <Link to={'/app/map'} className="btn btn-dark mwidth">Map</Link>
                                 </li>
 
                                 <li id="nav-li" className="nav-item ">
-                                    <Link to={'/profile'} className="btn btn-dark mwidth">Profile</Link>
+                                    <Link to={'/app/profile'} className="btn btn-dark mwidth">Profile</Link>
                                 </li>
 
                             </ul>
