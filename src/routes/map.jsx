@@ -7,9 +7,6 @@ import { useEffect } from "react";
 import Feature from "../components/cmp-feature/feature";
 
 
-const lista = ["algo1", "algo1", "algo1", "algo1", "algo1", "algo1", "algo1"];
-
-
 /* make request for markers and distribute them to list container and map element */
 
 /**

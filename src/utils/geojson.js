@@ -4,88 +4,88 @@ const geojson =
       {
         "type": "Feature",
         "properties": {
-          "title": "Lincoln Park",
-          "description": "A northside park that is home to the Lincoln Park Zoo"
+          "title": "Universidad del Valle",
+          "description": "Institucion educativa publica"
         },
         "geometry": {
-          "coordinates": [-87.637596, 41.940403],
+          "coordinates": [-76.5297, 3.3756],
           "type": "Point"
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "title": "Burnham Park",
-          "description": "A lakefront park on Chicago's south side"
+          "title": "Jardin Plaza",
+          "description": "Centro comercial"
         },
         "geometry": {
-          "coordinates": [-87.603735, 41.829985],
+          "coordinates": [-76.527607, 3.369145],
           "type": "Point"
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "title": "Millennium Park",
-          "description": "A downtown park known for its art installations and unique architecture"
+          "title": "Base aerea Marco Fidel Suarez",
+          "description": "Base Aerea y Escuela Militar de Aviacion"
         },
         "geometry": {
-          "coordinates": [-87.622554, 41.882534],
+          "coordinates": [-76.496390,3.458934],
           "type": "Point"
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "title": "Grant Park",
-          "description": "A downtown park that is the site of many of Chicago's favorite festivals and events"
+          "title": "Palacio de Justicia Pedro Elias Serrano Abadia",
+          "description": "Edificio gubernamental"
         },
         "geometry": {
-          "coordinates": [-87.619185, 41.876367],
+          "coordinates": [-76.5306485,3.4477183],
           "type": "Point"
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "title": "Humboldt Park",
-          "description": "A large park on Chicago's northwest side"
+          "title": "Canchas Panamericanas",
+          "description": "Complejo Deportivo"
         },
         "geometry": {
-          "coordinates": [-87.70199, 41.905423],
+          "coordinates": [-76.537155, 3.424771],
           "type": "Point"
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "title": "Douglas Park",
-          "description": "A large park near in Chicago's North Lawndale neighborhood"
+          "title": "Iglesia de San Antonio",
+          "description": "Sitio turistico"
         },
         "geometry": {
-          "coordinates": [-87.699329, 41.860092],
+          "coordinates": [-76.541892,3.447330],
           "type": "Point"
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "title": "Calumet Park",
-          "description": "A park on the Illinois-Indiana border featuring a historic fieldhouse"
+          "title": "Hospital Universitaro Evaristo Garcia",
+          "description": ""
         },
         "geometry": {
-          "coordinates": [-87.530221, 41.715515],
+          "coordinates": [-76.544982, 3.430040],
           "type": "Point"
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "title": "Jackson Park",
-          "description": "A lakeside park that was the site of the 1893 World's Fair"
+          "title": "Cristo Rey",
+          "description": "Monumento a Cristo Rey"
         },
         "geometry": {
-          "coordinates": [-87.580389, 41.783185],
+          "coordinates": [-76.564817, 3.435891],
           "type": "Point"
         }
       },

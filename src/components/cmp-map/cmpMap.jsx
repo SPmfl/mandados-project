@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import './cmpMap.css';
 
-import geodata from './data.json';
+import geojson from '../../utils/geojson.js';
 
 
 const apiKey = process.env.REACT_APP_MAPBOX_API_TOKEN;
@@ -17,7 +17,25 @@ export default function MapComponent(props) {
   const [lat, setLat] = useState(3.3756);
   const [zoom, setZoom] = useState(15);
   const [geoState, setGeoState] = useState(true);
-  const [features, setFeatures] = useState(geodata.features)
+  const [features, setFeatures] = useState(geojson.features)
+
+  const addToMap = (map, features) => {
+    features.map(feature => {
+      new mapboxgl.Marker(
+        {
+          color: "#000",
+          draggable: true,
+        }
+      )
+        .setLngLat(feature.geometry.coordinates)
+        .setPopup(
+          new mapboxgl.Popup()
+            .setHTML("<h1>Marker!!!</h1>")
+            .addTo(map))
+        .addTo(map);
+    });
+  }
+
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -27,6 +45,7 @@ export default function MapComponent(props) {
       center: [lng, lat],
       zoom: zoom
     });
+    addToMap(map.current, features);
   });
 
 
@@ -60,27 +79,12 @@ export default function MapComponent(props) {
     });
   });
 
-  useEffect(() => {
-    addToMap(map.current, features);
-  })
+  // useEffect(() => {
+  //   addToMap(map.current, features);
+  // })
 
 
-  const addToMap = (map, features) => {
-    features.map(feature => {
-      new mapboxgl.Marker(
-        {
-          color: "#000",
-          draggable: true,
-        }
-      )
-        .setLngLat(feature.geometry.coordinates)
-        .setPopup(
-          new mapboxgl.Popup()
-            .setHTML("<h1>Marker!!!</h1>")
-            .addTo(map))
-        .addTo(map);
-    });
-  }
+
 
   return (
     <div>
