@@ -1,4 +1,3 @@
-import getIdByToken from '../middlewares/getIdByToken.js';
 import User from '../db/db-models/userModel.js';
 import { Op } from 'sequelize';
 
@@ -30,7 +29,7 @@ const getInfoPruebaFront = async (req,res)=>{
 
 const getInfo2 = async (req,res)=>{
     try {
-        const iduser = getIdByToken(req.headers['x-access-token']);
+        const iduser = getIdByToken(req.headers['x_access_token']);
         console.log(`user id: ${iduser}`);
         const operator = await User.findAll({
             where: { userid: { [Op.eq]: iduser } }
@@ -49,7 +48,7 @@ const updateInfo = async(req,res)=>{
 
 
 
-        const useridtoken = getIdByToken(req.headers['x-access-token']);
+        const useridtoken = getIdByToken(req.headers['x_access_token']);
         const { name } = req.body;
         await User.update({ name },
             {
