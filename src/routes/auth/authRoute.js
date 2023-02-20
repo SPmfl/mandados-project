@@ -3,6 +3,8 @@ import Router from 'express';
 import passport from 'passport';
 import Jwt from 'jsonwebtoken';
 
+import verifyRol from '../../middlewares/verifyRol.js';
+
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,49 +12,43 @@ dotenv.config();
 const router = Router();
 
 
-const signingToken = (req) => {
-    const body = { userid: req.body.user.userid, email: req.body.user.email }
-    const { userid, name, email, rol } = req.body.user;
-    //console.log("firmando token con userid y email", body);
-    // const token = Jwt.sign({ user: body }, process.env.TOKEN_SECRET);
-    const token = Jwt.sign({ user: { userid, name, email, rol } }, process.env.TOKEN_SECRET);
+const signingToken = (user) => {
+    const { userid, name, email, roluser } = user;
+    const token = Jwt.sign({ userid, name, email, roluser },
+        process.env.TOKEN_SECRET);
     return token;
 }
 
 router.post('/signup',
     passport.authenticate('signup', { session: false }),
     (req, res) => {
-        const token = signingToken(req);
+        const token = signingToken(req.user);
+        const { userid, name, email, roluser } = req.user;
+
         res.status(200).json({
             message: "signup successful, you can now login",
-            user: req.body.user,
+            user: { userid, name, email, roluser },
             x_access_token: token
         });
     }
 );
 
-// router.post('/login', passport.authenticate('signin', { session: false }),
-//     function (req, res) {
-//         const token = signingToken(req);
-//         res.status(200).json({ x_access_token: token });
-//     });
-
-router.post('/login',  passport.authenticate('signin', { session: false }), 
-    (req, res)=>{
+router.post('/login',
+    passport.authenticate('login', { session: false }),
+    (req, res) => {
         try {
-            console.log("login::::::", req.body);
-            const token = signingToken(req);
+            const token = signingToken(req.user);
             res.status(200).json({ x_access_token: token });
         } catch (error) {
             console.error(error);
         }
     });
 
-
-
-
-router.get('/profile', passport.authenticate('jwt', { session: false }),
+router.get('/profile',
+    [passport.authenticate('jwt', { session: false }),
+    verifyRol.verifyOperator],
     (req, res, next) => {
+        console.log("testing what comes from jwt strategy",req.user);
         res.json({
             message: 'profile - passed auth',
             user: req.user
