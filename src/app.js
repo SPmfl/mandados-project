@@ -14,7 +14,7 @@ import cors from 'cors';
 
 
 const app = express();
-import './auth/auth.js';
+import './middlewares/auth.js';
 
 const corsOptions = {
     //origin: 'http://localhost:4500',
