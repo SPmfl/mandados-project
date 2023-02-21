@@ -34,8 +34,6 @@ passport.use('signup', new LocalStrategy(
             const { userid, name, roluser } = req.body;
             const hashedPassword = await bcrypt.hash(reqPassword, 10);
 
-            console.log(`email&password :::: ${sanitizedEmail} - ${hashedPassword}`);
-
             // save new user on database
             const user = await User.create(
                 {
@@ -73,14 +71,13 @@ passport.use('login', new LocalStrategy(
             }
 
             const validation = await User.isValidPassword(reqPassword, userAlready.password);
-            // console.log("password validation ", validation);
+
             if (!validation) {
                 console.log("user password wrong!");
                 return done(null, false, { message: 'wrong password' });
             }
             delete req.body.email;
             delete req.body.password;
-            // delete userAlready.dataValues.password;
             return done(null, userAlready.dataValues, { message: "login successfull" });
         } catch (error) {
             return done(error);
@@ -96,7 +93,7 @@ passport.use('jwt', new Strategy({
 }, async (dataFromToken, done) => {
     try {
         if(!dataFromToken) return done(null, false, { message: 'token not provided' });
-        
+
         delete dataFromToken.iat;
         const userAlready = await User.findOne({ where: { email: dataFromToken.email } });
         if (userAlready === null || userAlready === undefined) 
