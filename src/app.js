@@ -11,22 +11,15 @@ import marksRoutes from './routes/roles/marksRoutes.js'
 
 import cors from 'cors';
 
-
-
 const app = express();
 import './middlewares/auth.js';
 
 const corsOptions = {
-    //origin: 'http://localhost:4500',
     origin: '*',
     optionsSuccesssStatus:200
 }
 
 app.use(cors(corsOptions));
-
-
-//app.options('*', cors());
-// app.use(cors({origin: '*'}));
 
 app.use(express.json());
 app.use(morgan('dev'));
