@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Outlet, Route, Routes, Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import '../styles/login.css';
 
@@ -67,29 +67,26 @@ function Login() {
         event.preventDefault();
         try {
             if (!isLoggedIn) { 
-                setIsLoggedIn(true) 
-
+                setIsLoggedIn(true)
             }
-            // axios.post(urlSignup, {
-            //     body: {
-            //         userid: useridSignup,
-            //         name: nameSignup,
-            //         roluser: rolSignup,
-            //         email: emailSignup,
-            //         password: passwordSignup
-            //     }
-            // }).then((response) => {
-            //     const data = response.data;
-            //     console.log("data received from signup", data);
+            axios.post(urlSignup, {
+                    userid: useridSignup,
+                    name: nameSignup,
+                    roluser: rolSignup,
+                    email: emailSignup,
+                    password: passwordSignup
+            }).then((response) => {
+                const data = response.data;
+                const token = data['x_access_token']; 
+                console.log("data received from signup ::", data.message);
 
-            //     if ('x_access_token' in data) {
-            //         console.log("token received!");
-            //         localStorage.setItem('x_access_token',
-            //             JSON.parse(response.data.token));
-            //         window.location('/app/welcome');
-            //     }
-
-            // }).catch(console.error)
+                if (token) {
+                    localStorage.setItem('x_access_token', token);
+                    console.log("token received! & stored!");
+                    return <Navigate to="/app" />;
+                    // window.location('/app');
+                }
+            }).catch(console.error);
         } catch (error) {
             console.error(error);
         }
