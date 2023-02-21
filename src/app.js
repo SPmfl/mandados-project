@@ -7,7 +7,7 @@ import './db/db-connection/db-mongo.js';
 import authUser from './routes/auth/authRoute.js';
 import operatorRoutes  from './routes/roles/operatorRoutes.js';
 import adminRoutes from './routes/roles/adminRoutes.js';
-
+import marksRoutes from './routes/roles/marksRoutes.js'
 
 import cors from 'cors';
 
@@ -41,6 +41,7 @@ app.get('/api', (req, res)=>{
 app.use('/api/auth', authUser);
 app.use('/api/operator', operatorRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/mark', marksRoutes);
 
 app.get('*',(req,res)=>{
     res.status(404).end("404 - page not found ");
