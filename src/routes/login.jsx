@@ -21,70 +21,43 @@ function Login() {
     const urlLogin = 'http://localhost:4500/api/auth/login';
     const handleLogin = (event) => {
         event.preventDefault();
-        try {
-            if (!isLoggedIn) { 
-                setIsLoggedIn(true) 
 
-            }
-
-            // axios.post(urlLogin, {
-            //     headers:{
-            //         'Content-Type':'application/json;charset=utf-8'
-            //     },
-            //     body: {
-            //         email: emailLogin,
-            //         password:  passwordLogin
-            //     }
-            // }).then( (response) =>{
-            // axios.post(urlLogin, {
-            //     body: {
-            //         email: emailLogin,
-            //         password: passwordLogin
-            //     }
-            // }).then((response) => {
-            //     const data = response.data;
-            //     console.log("data received");
-            //     if (!data) return window.location('/');
-            //     if ('x_access_token' in data) {
-            //         console.log("token received!");
-            //         localStorage.setItem('x_access_token',
-            //             JSON.parse(response.data.token));
-            //         window.location('/app/welcome');
-            //     } else {
-            //         console.log("no token access provided");
-            //     }
-
-            // }).catch(console.error)
-        } catch (error) {
-            console.error(error);
+        if (!isLoggedIn) {
+            setIsLoggedIn(true)
         }
-
-
+        axios.post(urlLogin, {
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+                email: emailLogin,
+                password: passwordLogin
+        }).then((response) => {
+            const data = response.data;
+            const token = data['x_access_token'];
+            if (!data) return <Navigate to="/" />;
+            localStorage.setItem('x_access_token', token);
+            return <Navigate to="/app" />;
+        }).catch(console.error);
     }
 
     const urlSignup = 'http://localhost:4500/api/auth/signup';
     const handleSignup = (event) => {
         event.preventDefault();
         try {
-            if (!isLoggedIn) { 
+            if (!isLoggedIn) {
                 setIsLoggedIn(true)
             }
             axios.post(urlSignup, {
-                    userid: useridSignup,
-                    name: nameSignup,
-                    roluser: rolSignup,
-                    email: emailSignup,
-                    password: passwordSignup
+                userid: useridSignup,
+                name: nameSignup,
+                roluser: rolSignup,
+                email: emailSignup,
+                password: passwordSignup
             }).then((response) => {
                 const data = response.data;
-                const token = data['x_access_token']; 
-                console.log("data received from signup ::", data.message);
-
+                const token = data['x_access_token'];
                 if (token) {
                     localStorage.setItem('x_access_token', token);
                     console.log("token received! & stored!");
                     return <Navigate to="/app" />;
-                    // window.location('/app');
                 }
             }).catch(console.error);
         } catch (error) {
