@@ -15,7 +15,9 @@ const router = Router();
 const signingToken = (user) => {
     const { userid, name, email, roluser } = user;
     const token = Jwt.sign({ userid, name, email, roluser },
-        process.env.TOKEN_SECRET);
+        process.env.TOKEN_SECRET,{
+            expiresIn: process.env.TOKEN_EXPIRES
+        });
     return token;
 }
 

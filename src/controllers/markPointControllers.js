@@ -95,4 +95,4 @@ const updateMark = async (req, res) => {
     }
 }
 
-export { getAllMarks, getMark, createMark, deleteMark, updateMark }
+export default { getAllMarks, getMark, createMark, deleteMark, updateMark }
