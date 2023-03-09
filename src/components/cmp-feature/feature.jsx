@@ -3,10 +3,11 @@ import './feature.css'
 import React, { useState } from 'react';
 
 const Feature = (props) => {
-  const [title, setTitle] = useState(props.properties.title);
-  const [description, setDescription] = useState(props.properties.description);
-  const [longitude, setLongitude] = useState(props.geometry.coordinates[0]);
-  const [latitude, setLatitude] = useState(props.geometry.coordinates[1]);
+  console.log("there is the props of Feature ", props);
+  const [title, setTitle] = useState(props.value.properties.title);
+  const [description, setDescription] = useState(props.value.properties.description);
+  const [longitude, setLongitude] = useState(props.value.geometry.coordinates[0]);
+  const [latitude, setLatitude] = useState(props.value.geometry.coordinates[1]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

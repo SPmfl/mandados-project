@@ -1,8 +1,6 @@
 //import LoginForm from './pages/login';
 import Map from './map';
 import Profile from './profile';
-
-
 import {
     createBrowserRouter,
     RouterProvider,

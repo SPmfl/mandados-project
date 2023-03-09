@@ -41,7 +41,7 @@ export default function MapComponent(props) {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v12',
+      style: process.env.REACT_APP_MAPBOX_STYLES,
       center: [lng, lat],
       zoom: zoom
     });
