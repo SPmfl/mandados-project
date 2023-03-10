@@ -17,7 +17,8 @@ export default function MapComponent(props) {
   const [lat, setLat] = useState(3.3756);
   const [zoom, setZoom] = useState(15);
   const [geoState, setGeoState] = useState(true);
-  const [features, setFeatures] = useState(geojson.features)
+  const [features, setFeatures] = useState(geojson.features);
+  // const [features, setFeatures] = useState(props.features)
 
   const addToMap = (map, features) => {
     features.map(feature => {
@@ -33,6 +34,7 @@ export default function MapComponent(props) {
             .setHTML("<h1>Marker!!!</h1>")
             .addTo(map))
         .addTo(map);
+      return null;
     });
   }
 
@@ -77,7 +79,7 @@ export default function MapComponent(props) {
     map.current.on('load', () => {
       geolocate.trigger();
     });
-  });
+  },[geoState]);
 
   // useEffect(() => {
   //   addToMap(map.current, features);

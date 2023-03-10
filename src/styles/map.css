@@ -1,8 +1,8 @@
 #maplist-container {
     position: relative;
     width: 100%;
-    min-height: 80%;
-    height: 800px;
+    min-height: 700px;
+    height: 100%;
     
     display: flex;
     flex-direction: row;
@@ -11,8 +11,10 @@
 }
 
 #list-container {
+    position: absolute;
     min-width: 500px;
-    max-height: 700px;
+    min-height: 700px;
+    height:100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -23,7 +25,8 @@
 
 #map-content {
     width: 100%;
-    min-height: 700px;
+    min-height: 500px;
+    height: 100%;
     padding-right: 10px;
 }
 
