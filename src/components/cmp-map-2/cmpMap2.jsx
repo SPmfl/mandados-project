@@ -5,6 +5,7 @@ import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
 import geojson from '../../utils/geojson';
 
+
 const apiKey = process.env.REACT_APP_MAPBOX_API_TOKEN;
 
 function CmpMap(params) {
@@ -20,7 +21,8 @@ function CmpMap(params) {
         zoom: zoom
     }
 
-    const [features, setFeatures] = useState(geojson.features);
+    // const [features, setFeatures] = useState(geojson.features);
+    const [features, setFeatures] = useState({});
 
     const onMove = () => {
         const map = mapRef.current;
@@ -38,13 +40,38 @@ function CmpMap(params) {
         return null;
     }
 
+    function parallelLines(e) {
+        return "hola lineas paralelas";
+    }
+
+    const onUpdate = useCallback(e => {
+        setFeatures(currFeatures => {
+          const newFeatures = {...currFeatures};
+          for (const f of e.features) {
+            newFeatures[f.id] = f;
+          }
+          return newFeatures;
+        });
+      }, []);
+    
+      const onDelete = useCallback(e => {
+        setFeatures(currFeatures => {
+          const newFeatures = {...currFeatures};
+          for (const f of e.features) {
+            delete newFeatures[f.id];
+          }
+          return newFeatures;
+        });
+      }, []);
+
+
     return (
         <Map
             ref={mapRef}
             onMove={onMove}
             initialViewState={initialView}
             style={{ width: "100vw", height: "80vh" }}
-            mapStyle="mapbox://styles/mapbox/light-v9"
+            mapStyle="mapbox://styles/mapbox/dark-v10"
             mapboxAccessToken={apiKey}
         >
             <div className="sidebar">
@@ -54,11 +81,15 @@ function CmpMap(params) {
             <GeolocateControl position="bottom-left" />
             <DrawControl
                 position="top-left"
-                displayControlsDefault={true}
-                // controls={{
-                //     line:true,
-                //     trash: true
-                //   }}
+                displayControlsDefault={false}
+                controls={{
+                    line_string: true,
+                    trash: true
+                }}
+                defaultMode="draw_line_string"
+                onCreate={onUpdate}
+                onUpdate={onUpdate}
+                onDelete={onDelete}
             />
             {/* {features && features.map(ft => {
                 return <Marker longitude={ft.geometry.coordinates[0]}
