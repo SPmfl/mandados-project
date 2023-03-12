@@ -19,7 +19,7 @@ const geojson =
           "description": "Centro comercial"
         },
         "geometry": {
-          "coordinates": [-76.527607, 3.369145],
+          "coordinates": [-76.5276, 3.3691],
           "type": "Point"
         }
       },
