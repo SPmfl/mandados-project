@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import Map, { FullscreenControl, Marker, useControl, Popup, GeolocateControl } from 'react-map-gl';
+import Map, { Source, FullscreenControl, Marker, useControl, Popup, GeolocateControl, Layer } from 'react-map-gl';
 import * as turf from '@turf/turf';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
@@ -13,7 +13,7 @@ function CmpMap(params) {
 
     const [lng, setLng] = useState(-76.5297);
     const [lat, setLat] = useState(3.3756);
-    const [zoom, setZoom] = useState(15);
+    const [zoom, setZoom] = useState(14);
 
     const initialView = {
         longitude: lng,
@@ -21,8 +21,10 @@ function CmpMap(params) {
         zoom: zoom
     }
 
-    // const [features, setFeatures] = useState(geojson.features);
+    const [myfeatures, setMyFeatures] = useState(geojson.features);
     const [features, setFeatures] = useState({});
+
+    const [showPopup, setShowPopup] = useState(true);
 
     const onMove = () => {
         const map = mapRef.current;
@@ -40,29 +42,55 @@ function CmpMap(params) {
         return null;
     }
 
-    function parallelLines(e) {
-        return "hola lineas paralelas";
-    }
-
     const onUpdate = useCallback(e => {
         setFeatures(currFeatures => {
-          const newFeatures = {...currFeatures};
-          for (const f of e.features) {
-            newFeatures[f.id] = f;
-          }
-          return newFeatures;
+            const newFeatures = { ...currFeatures };
+            for (const f of e.features) {
+                newFeatures[f.id] = f;
+            }
+            return newFeatures;
         });
-      }, []);
-    
-      const onDelete = useCallback(e => {
+    }, []);
+
+    const onDelete = useCallback(e => {
         setFeatures(currFeatures => {
-          const newFeatures = {...currFeatures};
-          for (const f of e.features) {
-            delete newFeatures[f.id];
-          }
-          return newFeatures;
+            const newFeatures = { ...currFeatures };
+            for (const f of e.features) {
+                delete newFeatures[f.id];
+            }
+            return newFeatures;
         });
-      }, []);
+    }, []);
+
+
+
+
+
+
+
+
+
+
+    const createParallelLines = (line, offset) => {
+        const leftLine = turf.lineOffset(line, offset, { units: "kilometers" });
+        const rightLine = turf.lineOffset(line, -offset, { units: "kilometers" });
+        return [leftLine, rightLine];
+    };
+
+
+    const line = {
+        type: "Feature",
+        geometry: {
+            type: "LineString",
+            coordinates: [
+                [-76.5449, 3.4300],
+                [-76.5297, 3.3756],
+                [-76.5276, 3.3691],
+                [-76.5418, 3.4473]
+            ],
+        },
+    };
+    const parallelLines = createParallelLines(line, 0.05);
 
 
     return (
@@ -71,7 +99,7 @@ function CmpMap(params) {
             onMove={onMove}
             initialViewState={initialView}
             style={{ width: "100vw", height: "80vh" }}
-            mapStyle="mapbox://styles/mapbox/dark-v10"
+            mapStyle="mapbox://styles/mapbox/light-v9"
             mapboxAccessToken={apiKey}
         >
             <div className="sidebar">
@@ -86,25 +114,40 @@ function CmpMap(params) {
                     line_string: true,
                     trash: true
                 }}
-                defaultMode="draw_line_string"
+                // defaultMode="draw_line_string"
                 onCreate={onUpdate}
                 onUpdate={onUpdate}
                 onDelete={onDelete}
             />
-            {/* {features && features.map(ft => {
-                return <Marker longitude={ft.geometry.coordinates[0]}
-                    latitude={ft.geometry.coordinates[1]}
-                    onClick={e => {
-                        e.preventDefault();
-                        setSelected(ft);
-                        setShowPopUp(true);
-                    }} >
-                </Marker>
-            })
-            } */}
+            
+            <Source
+                id="parallelLines"
+                type="geojson"
+                data={{
+                    type: "FeatureCollection",
+                    features: parallelLines
+                }}
+            >
+                <Layer
+                    id="parallelLinesLayer"
+                    type="line"
+                    source="parallelLines"
+                    paint={{
+                        "line-color": "red",
+                        "line-width": 2,
+                    }}
+                />
+            </Source>
 
+            {/* {showPopup && (
+                <Popup longitude={features} latitude={40}
+                    anchor="bottom"
+                    onClose={() => setShowPopup(false)}>
+                    You are here
+                </Popup> )
+            } */}
         </Map>
-    )
+    );
 }
 
 

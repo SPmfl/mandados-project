@@ -30,7 +30,7 @@ const geojson =
           "description": "Base Aerea y Escuela Militar de Aviacion"
         },
         "geometry": {
-          "coordinates": [-76.496390,3.458934],
+          "coordinates": [-76.4963,3.4589],
           "type": "Point"
         }
       },
@@ -41,7 +41,7 @@ const geojson =
           "description": "Edificio gubernamental"
         },
         "geometry": {
-          "coordinates": [-76.5306485,3.4477183],
+          "coordinates": [-76.5306,3.4477],
           "type": "Point"
         }
       },
@@ -52,7 +52,7 @@ const geojson =
           "description": "Complejo Deportivo"
         },
         "geometry": {
-          "coordinates": [-76.537155, 3.424771],
+          "coordinates": [-76.5371, 3.4247],
           "type": "Point"
         }
       },
@@ -63,7 +63,7 @@ const geojson =
           "description": "Sitio turistico"
         },
         "geometry": {
-          "coordinates": [-76.541892,3.447330],
+          "coordinates": [-76.5418,3.4473],
           "type": "Point"
         }
       },
@@ -74,7 +74,7 @@ const geojson =
           "description": ""
         },
         "geometry": {
-          "coordinates": [-76.544982, 3.430040],
+          "coordinates": [-76.5449, 3.4300],
           "type": "Point"
         }
       },
@@ -85,7 +85,7 @@ const geojson =
           "description": "Monumento a Cristo Rey"
         },
         "geometry": {
-          "coordinates": [-76.564817, 3.435891],
+          "coordinates": [-76.5648, 3.4358],
           "type": "Point"
         }
       },
@@ -96,7 +96,7 @@ const geojson =
           "description": "A large park in Chicago's Austin neighborhood"
         },
         "geometry": {
-          "coordinates": [-87.769775, 41.873683],
+          "coordinates": [-87.7697, 41.8736],
           "type": "Point"
         }
       }
