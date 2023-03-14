@@ -30,7 +30,7 @@ function Map2() {
 
     const [lng, setLng] = useState(-76.5297);
     const [lat, setLat] = useState(3.3756);
-    const [zoom, setZoom] = useState(5);
+    const [zoom, setZoom] = useState(14);
 
     const [features, setFeatures] = useState({});
 
@@ -78,7 +78,7 @@ function Map2() {
                 onMove={onMove}
                 onError={evt => console.log("error: ", evt)}
                 initialViewState={initialView}
-                style={{ width: "100vw", height: "70%" }}
+                style={{ width: "60vw", height: "70vh" }}
                 mapStyle="mapbox://styles/mapbox/dark-v11"
                 mapboxAccessToken={apiKey}>
                 <Coordinates />
@@ -98,57 +98,19 @@ function Map2() {
                     onUpdate={onUpdate}
                     onDelete={onDelete}
                 />
+                { console.log(Object.values(features)) } 
 
-
-                <ParallelLines lines={Object.values(features)} />
+                <Control features={Object.values(features)} />
 
             </Map>
         </MapProvider>
     );
 }
 
-
-
-
-
-function ParallelLines(props) {
+function Control(props) {
     const { Map1 } = useMap();
     const map = Map1.getMap();
-
-    const addParallels = () => {
-
-        const offset = parseFloat(document.getElementById('offset').value);
-        const lines = props.lines;
-        const geojson = {
-            'type': 'FeatureCollection',
-            'features': {}
-        }
-
-        if (lines && Map1) {
-
-            const leftLine = turf.lineOffset(lines[0], offset, { units: "kilometers" });
-            const rightLine = turf.lineOffset(lines[0], -offset, { units: "kilometers" });
-            let parallel = [leftLine, rightLine];
-            console.log(JSON.stringify(parallel, null, 1), offset);
-            geojson.features = parallel
-        }
-
-        map.addSource('my-data', {
-            "type": 'geojson',
-            "data": geojson
-        });
-
-        map.addLayer({
-            id: 'my-data',
-            type: 'line',
-            source: 'my-data',
-            paint: {
-                "line-color": "red",
-                "line-width": 2
-            }
-        });
-        return null;
-    }
+    const features = props.features;
 
     return <>
         <div style={{
@@ -174,7 +136,12 @@ function ParallelLines(props) {
                 style={{
                     width: "100px"
                 }} />
-            <button onClick={addParallels}>add Parallels</button>
+            <button onClick={()=>addParallels(map, features, parseFloat(document.getElementById("offset").value)) }>
+                add Parallels
+            </button>
+            <button onClick={() => { addCircle(map, features) }}>
+                add Circles
+            </button>
             <NavigateButton />
         </div>
     </>
@@ -182,7 +149,78 @@ function ParallelLines(props) {
 
 }
 
+const featureFilter = (features, typeFeature) => {
+    if (typeFeature !=="Point"  && typeFeature !== "LineString") return [];
+    if (features.length === 0) return [];
+    return features.filter(ft => ft.geometry.type === typeFeature);
+}
 
+const addParallels = (map, features, offset) => {
+    
+    const lines = featureFilter(features, "LineString");
+
+
+        for (const ft of lines) {
+            if(map.getSource(ft.id)) {
+                map.removeSource(ft.id);
+                map.removeLayer(ft.id);
+            }
+            const geojson = {
+                'type': 'FeatureCollection',
+                'features': {}
+            }
+            const leftLine = turf.lineOffset(ft, offset, { units: "kilometers" });
+            const rightLine = turf.lineOffset(ft, -offset, { units: "kilometers" });
+            let parallel = [leftLine, rightLine];
+            //console.log(JSON.stringify(parallel, null, 1), offset);
+            geojson.features = parallel
+            
+            map.addSource(`${ft.id}`, {
+                "type": 'geojson',
+                "data": geojson
+            });
+
+            map.addLayer({
+                id: `${ft.id}`,
+                type: 'line',
+                source: `${ft.id}`,
+                paint: {
+                    "line-color": "red",
+                    "line-width": 2
+                }
+            });
+    }
+
+
+    // if (lines && Map1) {
+
+    //     const leftLine = turf.lineOffset(lines, offset, { units: "kilometers" });
+    //     const rightLine = turf.lineOffset(lines, -offset, { units: "kilometers" });
+    //     let parallel = [leftLine, rightLine];
+    //     console.log(JSON.stringify(parallel, null, 1), offset);
+    //     geojson.features = parallel
+    // }
+
+    // map.addSource('my-data', {
+    //     "type": 'geojson',
+    //     "data": geojson
+    // });
+
+    // map.addLayer({
+    //     id: 'my-data',
+    //     type: 'line',
+    //     source: 'my-data',
+    //     paint: {
+    //         "line-color": "red",
+    //         "line-width": 2
+    //     }
+    // });
+    return null;
+}
+const addCircle = (map, features) => {
+    const points = featureFilter(features, "LineString");
+    console.log(points);
+}
 
 
 function Coordinates(props) {
