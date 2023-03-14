@@ -10,11 +10,13 @@ import Root from './root';
 import Login from './login'
 import Welcome from './welcome'
 import ErrorPage from '../utils/errorPage';
+import Map2 from '../components/cmp-map-2/map2';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Login />,
+        element: <Map2/>,
+        // element: <Login />,
         errorElement: <ErrorPage />
     }, 
     {

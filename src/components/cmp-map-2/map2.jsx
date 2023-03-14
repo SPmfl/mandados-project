@@ -78,7 +78,7 @@ function Map2() {
                 onMove={onMove}
                 onError={evt => console.log("error: ", evt)}
                 initialViewState={initialView}
-                style={{ width: "60vw", height: "70vh" }}
+                style={{ width: "100vw", height: "100vh" }}
                 mapStyle="mapbox://styles/mapbox/dark-v11"
                 mapboxAccessToken={apiKey}>
                 <Coordinates />
