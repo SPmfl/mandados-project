@@ -21,8 +21,8 @@ import React, { useRef, useState, useCallback } from "react";
 
 
 
-const apiKey = process.env.REACT_APP_MAPBOX_API_TOKEN;
-
+// const apiKey = process.env.REACT_APP_MAPBOX_API_TOKEN;
+const apiKey = "pk.eyJ1Ijoic3BtZmwiLCJhIjoiY2xkeTVsc3VoMG9jZDNvcHJhdndheGhucCJ9.mqbxxzXE2pf-QAHd5rbvaQ";
 
 
 function Map2() {
