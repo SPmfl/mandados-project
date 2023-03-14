@@ -98,7 +98,7 @@ function Map2() {
                     onUpdate={onUpdate}
                     onDelete={onDelete}
                 />
-                { console.log(Object.values(features)) } 
+                {/* { console.log(Object.values(features)) }  */}
 
                 <Control features={Object.values(features)} />
 
