@@ -5,6 +5,7 @@ import axios from "axios";
 import Feature from "../components/cmp-feature/feature";
 import { useEffect, useState } from "react";
 import CmpMap from "../components/cmp-map-2/cmpMap2";
+import Map2 from "../components/cmp-map-2/map2";
 
 const urlMarkers = process.env.REACT_APP_BACKEND_API_URL_LOCAL_MARK;
 
@@ -50,7 +51,8 @@ function Map() {
 
             <div id="map-content">
                 {/* <MapComponent markerList={list} ></MapComponent> */}
-                <CmpMap />
+                {/* <CmpMap /> */}
+                <Map2></Map2>
             </div>
 
         </div>
